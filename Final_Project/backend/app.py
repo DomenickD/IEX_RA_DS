@@ -1,27 +1,43 @@
-# Import everything needed in one place
+"""
+This file is responsible for the heavy lifting, flask routing,
+and model predictions from loaded models.
+"""
+
 import sqlite3
-from flask import Flask, request, jsonify
-from flask_cors import CORS
 import pickle
+from flask import Flask, request, jsonify
 import tensorflow as tf
 import numpy as np
-from nltk.tokenize import word_tokenize
-from nltk.corpus import wordnet
-from nltk.stem import WordNetLemmatizer, PorterStemmer
-import nltk
 import pandas as pd
+from flask_cors import CORS
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.stem import WordNetLemmatizer, PorterStemmer
 
 # Establish the app instance
 app = Flask(__name__)
-# CORS stands for Cross-Origin Resource Sharing. It's a security mechanism implemented in web browsers that restricts web pages from making requests to a different domain than the one they originated from.
+# CORS stands for Cross-Origin Resource Sharing.
+# It's a security mechanism implemented in web browsers that restricts
+# web pages from making requests to a different domain than the one they originated from.
 CORS(app)
 
 # Load models and vectorizer
 with open("models/vectorizer.pkl", "rb") as vec_file:
     vectorizer = pickle.load(vec_file)
 
-with open("models/nlp_model.pkl", "rb") as model_file:
+with open("models/NLP_model.pkl", "rb") as model_file:
     nlp_model = pickle.load(model_file)
+
+# with open("models/mnist_model.keras", "rb") as f:
+#     mnist_model = load_model(f)
+# with open("models/my_model.pkl", "rb") as f:
+#     titanic_model = pickle.load(f)
+
+# with open("models/scaler.pkl", "rb") as f:
+#     titanic_scaler = pickle.load(f)
+
+# with open("models/xgb_pipeline_minmaxscaler.pkl", "rb") as f:
+#     housing_pipeline = pickle.load(f)
 
 mnist_model = tf.keras.models.load_model("models/mnist_model.keras")
 titanic_model = pickle.load(open("models/my_model.pkl", "rb"))
@@ -36,36 +52,18 @@ nltk.download("averaged_perceptron_tagger_eng")
 nltk.download("wordnet")
 
 
-# List out all the functions I am going to use!
-# NLP Pre-Preprocessing
-def get_wordnet_pos(treebank_tag):
-    """This function will help organize words by parts of speech."""
-    if treebank_tag.startswith("J"):
-        return wordnet.ADJ
-    elif treebank_tag.startswith("V"):
-        return wordnet.VERB
-    elif treebank_tag.startswith("N"):
-        return wordnet.NOUN
-    elif treebank_tag.startswith("R"):
-        return wordnet.ADV
-    else:
-        return wordnet.NOUN
-
-
-# The actual NLP Preprocessing
 def preprocess_text(text):
     """
-    This function will do the majority of the preprocessing for any given text.
+    Perform NLP preprocessing on the given text, including tokenization,
+    lemmatization, and stemming. Defaults to lemmatizing as nouns.
     """
-    tokens = word_tokenize(text)
-    pos_tags = nltk.pos_tag(tokens)
     lemmatizer = WordNetLemmatizer()
     stemmer = PorterStemmer()
-    processed_tokens = []
-    for word, tag in pos_tags:
-        lemmatized_word = lemmatizer.lemmatize(word, get_wordnet_pos(tag))
-        stemmed_word = stemmer.stem(lemmatized_word)
-        processed_tokens.append(stemmed_word)
+
+    tokens = word_tokenize(text)
+
+    processed_tokens = [stemmer.stem(lemmatizer.lemmatize(word)) for word in tokens]
+
     return " ".join(processed_tokens)
 
 
@@ -114,7 +112,8 @@ def predict_digit():
 @app.route("/predict_titanic", methods=["POST"])
 def predict_titanic():
     """
-    This function takes in an array of data and uses it to predict against a pretrained model for the titanic data.
+    This function takes in an array of data and uses it to
+    predict against a pretrained model for the titanic data.
     """
     data = request.json
     # df = pd.DataFrame(data, index=[0])
@@ -128,7 +127,8 @@ def predict_titanic():
 @app.route("/predict_housing", methods=["POST"])
 def predict_housing():
     """
-    This function takes in an array of data and uses it to predict against a pretrained model for the Housing data.
+    This function takes in an array of data and uses it to
+    predict against a pretrained model for the Housing data.
     """
     data = request.json
     # df = pd.DataFrame(data, index=[0])
@@ -140,7 +140,8 @@ def predict_housing():
 @app.route("/query", methods=["POST"])
 def query_route():
     """
-    This function support sthe handling of SQL queries for the database file in another docker container.
+    This function support sthe handling of
+    SQL queries for the database file in another docker container.
     """
     try:
         query = request.json.get("query")
@@ -148,8 +149,12 @@ def query_route():
             return jsonify({"error": "No query provided"}), 400
         data = query_database(query)
         return jsonify(data)
+    except sqlite3.DatabaseError as db_error:
+        return jsonify({"error": f"Database error: {str(db_error)}"}), 500
+    except ValueError as val_error:
+        return jsonify({"error": f"Value error: {str(val_error)}"}), 400
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": f"Unexpected error: {str(e)}"}), 500
 
 
 if __name__ == "__main__":
