@@ -1,3 +1,5 @@
+"""The query tool frontend app and all the hidden pages."""
+
 import streamlit as st
 import requests
 import pandas as pd
@@ -34,11 +36,16 @@ def titanic_display():
     ## Overview of this project from Kaggle
     The sinking of the Titanic is one of the most infamous shipwrecks in history.
 
-    On April 15, 1912, during her maiden voyage, the widely considered “unsinkable” RMS Titanic sank after colliding with an iceberg. Unfortunately, there weren't enough lifeboats for everyone onboard, resulting in the death of 1502 out of 2224 passengers and crew.
+    On April 15, 1912, during her maiden voyage, the widely considered “unsinkable” 
+    RMS Titanic sank after colliding with an iceberg. Unfortunately, there weren't 
+    enough lifeboats for everyone onboard, resulting in the death of 1502 out of 2224 passengers and crew.
 
-    While there was some element of luck involved in surviving, it seems some groups of people were more likely to survive than others.
+    While there was some element of luck involved in surviving, it seems some 
+    groups of people were more likely to survive than others.
 
-    In this challenge, we ask you to build a predictive model that answers the question: “what sorts of people were more likely to survive?” using passenger data (ie name, age, gender, socio-economic class, etc).
+    In this challenge, we ask you to build a predictive model that answers the question: 
+    “what sorts of people were more likely to survive?” using passenger data 
+    (ie name, age, gender, socio-economic class, etc).
     """
     )
 
@@ -47,7 +54,8 @@ def titanic_display():
     ---
     ## Disclaimer about the data
     This dataset does not include all of the PEOPLE from the actual Titanic. 
-    There are 1309 rows of data for *passengers* in this Kaggle Dataset. There were 2240 total Passengers **and** Crew.
+    There are 1309 rows of data for *passengers* in this Kaggle Dataset. 
+    There were 2240 total Passengers **and** Crew.
     As a result, the 931 crew members are not accounted for. 
     """
     )
@@ -55,9 +63,12 @@ def titanic_display():
         """
     ---
     ## Problem Statement
-    The goal of this project is to develop a predictive model that accurately identifies factors influencing passenger survival rates during the tragic sinking of the RMS Titanic. 
-            By analyzing historical passenger data, we seek to uncover patterns and relationships between individual characteristics 
-            (such as age, gender, socio-economic class, cabin location, etc.) and their likelihood of survival.
+    The goal of this project is to develop a predictive model that accurately 
+    identifies factors influencing passenger survival rates during the tragic sinking of the RMS Titanic. 
+            By analyzing historical passenger data, we seek to uncover patterns 
+            and relationships between individual characteristics 
+            (such as age, gender, socio-economic class, cabin location, etc.) 
+            and their likelihood of survival.
             """
     )
 
@@ -66,20 +77,20 @@ def titanic_display():
     ---       
     ## List of Column Names and what the values represent
             
-    | Column Name    | Description                                                                     |
-    |----------------|---------------------------------------------------------------------------------|
-    | PassengerId    | A unique numerical identifier assigned to each passenger.                         |
-    | Survived       | Survival status of the passenger (0 = No, 1 = Yes).                              |
-    | Pclass         | The passenger's ticket class (1 = 1st Class, 2 = 2nd Class, 3 = 3rd Class).   |
-    | Name           | The passenger's full name.                                                      |
-    | Sex            | The passenger's gender (male, female).                                         |
-    | Age            | The passenger's age in years. Fractional values may exist for younger children. |
-    | SibSp          | The number of siblings or spouses traveling with the passenger.                   |
-    | Parch          | The number of parents or children traveling with the passenger.                   |
-    | Ticket         | The passenger's ticket number.                                                  |
-    | Fare           | The price the passenger paid for their ticket.                                  |
-    | Cabin          | The passenger's cabin number (if recorded).                                    |
-    | Embarked       | The passenger's port of embarkation (C = Cherbourg, Q = Queenstown, S = Southampton). |
+    | Column Name | Description                                                                     |
+    |-------------|---------------------------------------------------------------------------------|
+    | PassengerId | A unique numerical identifier assigned to each passenger.                         |
+    | Survived    | Survival status of the passenger (0 = No, 1 = Yes).                              |
+    | Pclass      | The passenger's ticket class (1 = 1st Class, 2 = 2nd Class, 3 = 3rd Class).   |
+    | Name        | The passenger's full name.                                                      |
+    | Sex         | The passenger's gender (male, female).                                         |
+    | Age         | The passenger's age in years. Fractional values may exist for younger children. |
+    | SibSp       | The number of siblings or spouses traveling with the passenger.                   |
+    | Parch       | The number of parents or children traveling with the passenger.                   |
+    | Ticket      | The passenger's ticket number.                                                  |
+    | Fare        | The price the passenger paid for their ticket.                                  |
+    | Cabin       | The passenger's cabin number (if recorded).                                    |
+    | Embarked    | The passenger's port of embarkation (C = Cherbourg, Q = Queenstown, S = Southampton).|
     ---
     """
     )
@@ -87,7 +98,8 @@ def titanic_display():
     st.subheader("Model Details")
     st.write(
         """
-    This data was run against multiple models and multiple normalization methods. The highest ratings were from the logistic regression model with a standardized MinMaxScalar provided by Sci-kit learn.
+    This data was run against multiple models and multiple normalization methods. 
+    The highest ratings were from the logistic regression model with a standardized MinMaxScalar provided by Sci-kit learn.
 
     Model Accuracy before Hyperparameter Tuning:
 
@@ -146,6 +158,7 @@ This plot represents the distribution of survivors on board.
 
 
 def housing_display():
+    """Define the housing page."""
     st.header("The Ames Housing Data from Ames, Iowa")
     st.divider()
     st.image("Pictures/Ames_Downtown.png")
@@ -190,11 +203,16 @@ def housing_display():
         """
     )
     st.write(
-        f"""
+        """
         ## Model Summary
-        - **Model Type**: I'm using an XGBoost Regressor model. This is a powerful type of gradient boosting algorithm that builds decision trees in an ensemble to make predictions. It's known for its accuracy and ability to handle a wide variety of data types.
+        - **Model Type**: I'm using an XGBoost Regressor model. 
+        This is a powerful type of gradient boosting algorithm that builds 
+        decision trees in an ensemble to make predictions. 
+        It's known for its accuracy and ability to handle a wide variety of data types.
 
-        - **Feature Scaling**: I've applied a MinMaxScaler to the data. This scaling technique helps ensure that all features in the dataset have a similar range (typically between 0 and 1), which can improve the performance of the model.
+        - **Feature Scaling**: I've applied a MinMaxScaler to the data. 
+        This scaling technique helps ensure that all features in the dataset have 
+        a similar range (typically between 0 and 1), which can improve the performance of the model.
         
         ---
                 
