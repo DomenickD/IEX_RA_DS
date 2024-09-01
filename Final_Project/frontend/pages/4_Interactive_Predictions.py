@@ -41,7 +41,7 @@ if table_option == "Titanic":
 
     if st.button("Predict"):
         response = requests.post(
-            "http://flask_route:5000/predict_titanic", json=user_input
+            "http://flask_route:5000/predict_titanic", json=user_input, timeout=15
         )
         result = response.json()
         result_df = pd.DataFrame([result])  # Convert the response to a DataFrame
@@ -101,7 +101,7 @@ elif table_option == "Housing":
 
     if st.button("Predict"):
         response = requests.post(
-            "http://flask_route:5000/predict_housing", json=user_input
+            "http://flask_route:5000/predict_housing", json=user_input, timeout=15
         )
         result = response.json()
         result_df = pd.DataFrame([result])
@@ -115,7 +115,9 @@ elif table_option == "Movie":
     query = st.text_area(label="Enter ONE sentence for sentiment testing:", value=query)
     if st.button("Predict"):
         response = requests.post(
-            "http://flask_route:5000/predict_sentiment", json={"text": query}
+            "http://flask_route:5000/predict_sentiment",
+            json={"text": query},
+            timeout=15,
         )
         result = response.json()
         sentiment = result["sentiment"]
@@ -154,7 +156,9 @@ elif table_option == "MNIST":
             # Send to Flask API
             image_data = np.array(processed_img).tolist()
             response = requests.post(
-                "http://flask_route:5000/predict_digit", json={"image_data": image_data}
+                "http://flask_route:5000/predict_digit",
+                json={"image_data": image_data},
+                timeout=15,
             )
             result = response.json()
             predicted_digit = result["digit"]

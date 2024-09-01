@@ -329,7 +329,9 @@ elif table_option == "Movie":
 query = st.text_area(label="Enter your SQL query here:", value=query)
 
 if st.button("Submit"):
-    response = requests.post("http://flask_route:5000/query", json={"query": query})
+    response = requests.post(
+        "http://flask_route:5000/query", json={"query": query}, timeout=15
+    )
 
     if response.status_code == 200:
         try:
@@ -341,7 +343,8 @@ if st.button("Submit"):
 
             ### Make Functions to display
             if table_option == "Titanic":
-                df = df.drop(columns=["Unnamed: 0"])
+                if "Unnamed: 0" in df.columns:
+                    df = df.drop(columns=["Unnamed: 0"])
                 st.dataframe(df)
                 counting = df["PassengerId"].count()
                 st.write(f"{counting} results are displayed.")
