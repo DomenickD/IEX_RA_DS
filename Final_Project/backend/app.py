@@ -1,6 +1,6 @@
 """
 This file is responsible for the heavy lifting, flask routing,
-and model predictions from loaded models.
+and model predictions from loaded models. All logic here. 
 """
 
 import sqlite3
