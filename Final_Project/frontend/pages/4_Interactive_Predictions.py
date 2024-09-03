@@ -39,6 +39,16 @@ if table_option == "Titanic":
         }
     ).to_dict(orient="records")[0]
 
+    # maybe
+    #     user_input = {
+    #     "Pclass": pclass,
+    #     "Age": age,
+    #     "SibSp": sib,
+    #     "Parch": par,
+    #     "Fare": fare,  # Use lowercase 'fare'
+    #     "Sex_binary": sex_map[sex],
+    # }
+
     if st.button("Predict"):
         response = requests.post(
             "http://flask_route:5000/predict_titanic", json=user_input, timeout=15
@@ -46,7 +56,7 @@ if table_option == "Titanic":
         result = response.json()
         result_df = pd.DataFrame([result])  # Convert the response to a DataFrame
         # st.write(result_df)
-        survival_prob = result_df["survival_prob"][0]
+        # survival_prob = result_df["survival_prob"][0]
         prediction = result_df["survived"][0]
 
         # Display the outcome
