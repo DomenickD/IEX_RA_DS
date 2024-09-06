@@ -6,3 +6,4 @@ pandas
 numpy
 streamlit-drawable-canvas
 pylint
+streamlit
