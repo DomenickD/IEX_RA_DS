@@ -1,0 +1,7 @@
+flask
+keras
+flask_cors
+nltk
+pandas
+numpy
+streamlit-drawable-canvas

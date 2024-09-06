@@ -65,7 +65,7 @@
 #             #-Dsonar.verbose= # optional, default is false
 #           projectBaseDir: .
             
-name: Build
+name: SonarCloud
 on:
   push:
     branches:
