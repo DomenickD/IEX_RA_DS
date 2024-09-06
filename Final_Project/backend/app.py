@@ -6,7 +6,7 @@ and model predictions from loaded models. All logic here.
 import sqlite3
 import pickle
 from flask import Flask, request, jsonify
-import tensorflow as tf
+import keras
 import numpy as np
 import pandas as pd
 from flask_cors import CORS
@@ -28,21 +28,21 @@ with open("models/vectorizer.pkl", "rb") as vec_file:
 with open("models/NLP_model.pkl", "rb") as model_file:
     nlp_model = pickle.load(model_file)
 
-# with open("models/mnist_model.keras", "rb") as f:
-#     mnist_model = load_model(f)
-# with open("models/my_model.pkl", "rb") as f:
-#     titanic_model = pickle.load(f)
+with open("models/mnist_model.keras", "rb") as f:
+    mnist_model = keras.models.load_model(f)
+with open("models/my_model.pkl", "rb") as f:
+    titanic_model = pickle.load(f)
 
-# with open("models/scaler.pkl", "rb") as f:
-#     titanic_scaler = pickle.load(f)
+with open("models/scaler.pkl", "rb") as f:
+    titanic_scaler = pickle.load(f)
 
-# with open("models/xgb_pipeline_minmaxscaler.pkl", "rb") as f:
-#     housing_pipeline = pickle.load(f)
+with open("models/xgb_pipeline_minmaxscaler.pkl", "rb") as f:
+    housing_pipeline = pickle.load(f)
 
-mnist_model = tf.keras.models.load_model("models/mnist_model.keras")
-titanic_model = pickle.load(open("models/my_model.pkl", "rb"))
-titanic_scaler = pickle.load(open("models/scaler.pkl", "rb"))
-housing_pipeline = pickle.load(open("models/xgb_pipeline_minmaxscaler.pkl", "rb"))
+# mnist_model = keras.models.load_model("models/mnist_model.keras")
+# titanic_model = pickle.load(open("models/my_model.pkl", "rb"))
+# titanic_scaler = pickle.load(open("models/scaler.pkl", "rb"))
+# housing_pipeline = pickle.load(open("models/xgb_pipeline_minmaxscaler.pkl", "rb"))
 
 # NLTK downloads
 nltk.download("punkt")
@@ -103,7 +103,7 @@ def predict_digit():
     """
     data = request.json
     image_data = np.array(data.get("image_data"))
-    processed_img = np.array(image_data).reshape(1, 28, 28, 1) / 255.0
+    processed_img = np.array(image_data).reshape((1, 28, 28, 1)) / 255.0
     prediction = mnist_model.predict(processed_img)
     predicted_digit = np.argmax(prediction)
     return jsonify({"digit": int(predicted_digit)})
@@ -153,8 +153,10 @@ def query_route():
         return jsonify({"error": f"Database error: {str(db_error)}"}), 500
     except ValueError as val_error:
         return jsonify({"error": f"Value error: {str(val_error)}"}), 400
-    except Exception as e:
-        return jsonify({"error": f"Unexpected error: {str(e)}"}), 500
+    except KeyError as e:
+        return jsonify({"error": f"KeyError: {str(e)}"}), 400  # Bad Request
+    except IOError as e:
+        return jsonify({"error": f"IOError: {str(e)}"}), 500  # Internal Server Error
 
 
 if __name__ == "__main__":

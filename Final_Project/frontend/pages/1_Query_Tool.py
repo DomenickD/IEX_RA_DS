@@ -21,6 +21,7 @@ if st.sidebar.button("Scroll to Top"):
 
 # I am going to define functions for cleaner coding in my if statments for the submit button
 def titanic_display():
+    """Hold the Titanic Page upon request."""
     st.write(
         """
     # Titanic Classification Dataset"""
@@ -38,7 +39,8 @@ def titanic_display():
 
     On April 15, 1912, during her maiden voyage, the widely considered “unsinkable” 
     RMS Titanic sank after colliding with an iceberg. Unfortunately, there weren't 
-    enough lifeboats for everyone onboard, resulting in the death of 1502 out of 2224 passengers and crew.
+    enough lifeboats for everyone onboard, resulting in the death of \
+        1502 out of 2224 passengers and crew.
 
     While there was some element of luck involved in surviving, it seems some 
     groups of people were more likely to survive than others.
@@ -64,7 +66,8 @@ def titanic_display():
     ---
     ## Problem Statement
     The goal of this project is to develop a predictive model that accurately 
-    identifies factors influencing passenger survival rates during the tragic sinking of the RMS Titanic. 
+    identifies factors influencing passenger survival rates during the tragic \
+        sinking of the RMS Titanic. 
             By analyzing historical passenger data, we seek to uncover patterns 
             and relationships between individual characteristics 
             (such as age, gender, socio-economic class, cabin location, etc.) 
@@ -77,20 +80,20 @@ def titanic_display():
     ---       
     ## List of Column Names and what the values represent
             
-    | Column Name | Description                                                                     |
-    |-------------|---------------------------------------------------------------------------------|
-    | PassengerId | A unique numerical identifier assigned to each passenger.                         |
-    | Survived    | Survival status of the passenger (0 = No, 1 = Yes).                              |
-    | Pclass      | The passenger's ticket class (1 = 1st Class, 2 = 2nd Class, 3 = 3rd Class).   |
-    | Name        | The passenger's full name.                                                      |
-    | Sex         | The passenger's gender (male, female).                                         |
-    | Age         | The passenger's age in years. Fractional values may exist for younger children. |
-    | SibSp       | The number of siblings or spouses traveling with the passenger.                   |
-    | Parch       | The number of parents or children traveling with the passenger.                   |
-    | Ticket      | The passenger's ticket number.                                                  |
-    | Fare        | The price the passenger paid for their ticket.                                  |
-    | Cabin       | The passenger's cabin number (if recorded).                                    |
-    | Embarked    | The passenger's port of embarkation (C = Cherbourg, Q = Queenstown, S = Southampton).|
+    | Column Name | Description                                                                  |
+    |-------------|------------------------------------------------------------------------------|
+    | PassengerId | A unique numerical identifier assigned to each passenger.                    |
+    | Survived    | Survival status of the passenger (0 = No, 1 = Yes).                          |
+    | Pclass      | The passenger's ticket class (1 = 1st Class, 2 = 2nd Class, 3 = 3rd Class).  |
+    | Name        | The passenger's full name.                                                   |
+    | Sex         | The passenger's gender (male, female).                                       |
+    | Age         | The passenger's age in years.                                                |
+    | SibSp       | The number of siblings or spouses traveling with the passenger.              |
+    | Parch       | The number of parents or children traveling with the passenger.              |
+    | Ticket      | The passenger's ticket number.                                               |
+    | Fare        | The price the passenger paid for their ticket.                               |
+    | Cabin       | The passenger's cabin number (if recorded).                                  |
+    | Embarked    | The passenger's embark port (C = Cherbourg, Q = Queenstown, S = Southampton).|
     ---
     """
     )
@@ -98,8 +101,10 @@ def titanic_display():
     st.subheader("Model Details")
     st.write(
         """
-    This data was run against multiple models and multiple normalization methods. 
-    The highest ratings were from the logistic regression model with a standardized MinMaxScalar provided by Sci-kit learn.
+    This data was run against multiple models and multiple normalization \
+        methods. 
+    The highest ratings were from the logistic regression model with a \
+        standardized MinMaxScalar provided by Sci-kit learn.
 
     Model Accuracy before Hyperparameter Tuning:
 
@@ -117,7 +122,8 @@ def titanic_display():
     st.divider()
 
     # st.image("Pictures/Distro_by_sex.png")
-    # st.caption("This shows a side by side of the amount of males to females who survived the Titanic and did not survive.")
+    # st.caption("This shows a side by side of the amount of males to females
+    # who survived the Titanic and did not survive.")
 
     # st.divider()
 
@@ -151,7 +157,8 @@ This plot represents the distribution of survivors on board.
     # DBSCAN
     st.image("Pictures/DBSCAN.png")
     st.caption(
-        "Here is the attempt at applying DBSCAN to the Titanic Dataset. No noticeable trends."
+        "Here is the attempt at applying DBSCAN to the Titanic Dataset. \
+            No noticeable trends."
     )
 
     st.divider()
@@ -169,15 +176,26 @@ def housing_display():
         """
         ## Data Background
 
-        The Ames Housing Dataset was compiled by Dean De Cock (Iowa State University) in 2011 for use in research and education.
-        The data captures information on residential home sales in Ames, Iowa between 2006 and 2010.
-        The Full dataset contains 2930 records and it is a commonly used dataset for Exploratory Data Analysis for Machine Learning Regression.     
+        The Ames Housing Dataset was compiled by Dean De Cock \
+            (Iowa State University) in 2011 for use in research \
+                and education.
+        The data captures information on residential home sales \
+            in Ames, Iowa between 2006 and 2010.
+        The Full dataset contains 2930 records and it is a \
+            commonly used dataset for Exploratory Data Analysis \
+                for Machine Learning Regression.     
             
         ---
                 
         ## Goal 
                 
-        The primary goal of this project is to build a predictive model that can reliably estimate the sale price of a house in Ames, Iowa. This model will leverage various housing attributes, like living area, number of bedrooms, and overall quality, to uncover patterns and make informed predictions.
+        The primary goal of this project is to build a predictive \
+            model that can reliably estimate the sale price of a \
+                house in Ames, Iowa. This model will leverage \
+                    various housing attributes, like living area, \
+                        number of bedrooms, and overall quality, \
+                            to uncover patterns and make informed \
+                                predictions.
                 
         ---
 
@@ -233,14 +251,19 @@ def housing_display():
 
     st.image("Pictures/relation_abvgrdliv_to_saleprice.png")
     st.caption(
-        "This helps to visualize if there's a positive correlation (and whether it's linear or not)."
+        "This helps to visualize if there's a positive correlation \
+            (and whether it's linear or not)."
     )
 
     st.divider()
 
     st.image("Pictures/Heatmap.png")
     st.caption(
-        "This is the heatmap. Our task is to predict Sale Price based on the data so we are only focused on what has a strong negative or positive correlation with the Sale Price. This is denoted by a number being closer to positive or negative 1."
+        "This is the heatmap. Our task is to predict Sale Price based \
+            on the data so we are only focused on what has a strong \
+                negative or positive correlation with the Sale Price. \
+                    This is denoted by a number being closer to \
+                        positive or negative 1."
     )
 
     st.divider()
@@ -251,13 +274,16 @@ def housing_display():
 
     st.image("Pictures/Elbow_Plot.png")
     st.caption(
-        "This shows the clusters. We call this an elbow plot because a well defined elbow is a roadmap to the optimal number of clusters vs. distortions."
+        "This shows the clusters. We call this an elbow plot because \
+            a well defined elbow is a roadmap to the optimal \
+                number of clusters vs. distortions."
     )
 
     st.divider()
 
 
 def movie_display():
+    """Hold teh Movie page hidden until requested."""
     st.header("The IMDB Dataset for Natural Language Processing")
 
     st.divider()
@@ -267,19 +293,33 @@ def movie_display():
     st.caption("Before there was chatbots, there was Natural Language Processing...")
     st.write(
         """
-    The IMDB dataset is a collection of 50,000 movie reviews from the Internet Movie Database (IMDB) website. The dataset is balanced, with 25,000 positive and 25,000 negative reviews. 
+    The IMDB dataset is a collection of 50,000 movie reviews from the \
+        Internet Movie Database (IMDB) website. The dataset is balanced, \
+            with 25,000 positive and 25,000 negative reviews. 
             
-    The primary use of the IMDB dataset is to train and evaluate models that can determine the sentiment expressed in a piece of text (e.g., movie review, product review). The binary labels make it suitable for supervised learning tasks.
+    The primary use of the IMDB dataset is to train and evaluate models \
+        that can determine the sentiment expressed in a piece of text \
+            (e.g., movie review, product review). \
+                The binary labels make it suitable for \
+                    supervised learning tasks.
             
-    The dataset consists of a Review Text column and a Sentiment Label column.
+    The dataset consists of a Review Text column and a \
+        Sentiment Label column.
             
     Some challenges Challenges and Considerations here include:
 
-    - Sarcasm and Subtlety: Some reviews may contain sarcasm or express sentiment in subtle ways, making accurate classification challenging.
+    - Sarcasm and Subtlety: Some reviews may contain sarcasm or \
+        express sentiment in subtle ways, making accurate \
+            classification challenging.
             
-    - Data Bias: The dataset may contain biases inherent in the original reviews, which could affect model performance.
+    - Data Bias: The dataset may contain biases inherent \
+        in the original reviews, which could affect model \
+            performance.
             
-    - Pre-processing: Raw reviews often require preprocessing steps like tokenization, stop-word removal, and potentially stemming or lemmatization before being used in models.
+    - Pre-processing: Raw reviews often require preprocessing \
+        steps like tokenization, stop-word removal, and \
+            potentially stemming or lemmatization before \
+                being used in models.
             
     """
     )
@@ -290,19 +330,25 @@ def movie_display():
 
     st.write(
         """
-    We used TFIDF (Term Frequency - Inverse Document Frequency) to take the preprocessed text and convert it into numbers so the machine learning model could read it.
+    We used TFIDF (Term Frequency - Inverse Document Frequency) \
+        to take the preprocessed text and convert it into numbers \
+            so the machine learning model could read it.
 
-    We then used a logistic regression model to train on the new numerical representations of this preprocessed data. 
+    We then used a logistic regression model to train on the \
+        new numerical representations of this preprocessed data. 
             
-    Doing this resulted in an accuracy in predictions for sentiment of **89.32%**.
+    Doing this resulted in an accuracy in predictions for sentiment \
+        of **89.32%**.
              
-    The best part? (We get to play with the model in this streamlit app!)
+    The best part? (We get to play with the model in this \
+        streamlit app!)
     """
     )
     st.divider()
     st.image("Pictures/Confusion_Matrix.png")
     st.caption(
-        "This confusion matrix shows us that the model identified reviews correctly (with its predictions) 89.32% of the time."
+        "This confusion matrix shows us that the model identified \
+            reviews correctly (with its predictions) 89.32% of the time."
     )
 
     st.divider()
@@ -318,15 +364,15 @@ table_option = st.radio(
     "Select dataset:", ("Titanic", "Housing", "Movie"), key="table_option"
 )
 
-query = ""
+INPUT_QUERY = ""
 if table_option == "Titanic":
-    query = "SELECT * FROM titanic;"
+    INPUT_QUERY = "SELECT * FROM titanic;"
 elif table_option == "Housing":
-    query = "SELECT * FROM housing;"
+    INPUT_QUERY = "SELECT * FROM housing;"
 elif table_option == "Movie":
-    query = "SELECT * FROM movie LIMIT 50;"
+    INPUT_QUERY = "SELECT * FROM movie LIMIT 50;"
 
-query = st.text_area(label="Enter your SQL query here:", value=query)
+query = st.text_area(label="Enter your SQL query here:", value=INPUT_QUERY)
 
 if st.button("Submit"):
     response = requests.post(
@@ -339,26 +385,26 @@ if st.button("Submit"):
             data = result.get("data", [])
             columns = result.get("columns", [])
             # Convert the JSON response to a pandas DataFrame with column names
-            df = pd.DataFrame(data, columns=columns)
+            DF = pd.DataFrame(data, columns=columns)
 
             ### Make Functions to display
             if table_option == "Titanic":
-                if "Unnamed: 0" in df.columns:
-                    df = df.drop(columns=["Unnamed: 0"])
-                st.dataframe(df)
-                counting = df["PassengerId"].count()
+                if "Unnamed: 0" in DF.columns:
+                    DF = DF.drop(columns=["Unnamed: 0"])
+                st.dataframe(DF)
+                counting = DF["PassengerId"].count()
                 st.write(f"{counting} results are displayed.")
                 titanic_display()
 
             elif table_option == "Housing":
-                st.dataframe(df)
-                counting = df["SalePrice"].count()
+                st.dataframe(DF)
+                counting = DF["SalePrice"].count()
                 st.write(f"{counting} results are displayed.")
                 housing_display()
 
             elif table_option == "Movie":
-                st.dataframe(df)
-                counting = df["review"].count()
+                st.dataframe(DF)
+                counting = DF["review"].count()
                 st.write(f"{counting} results are displayed.")
                 movie_display()
 

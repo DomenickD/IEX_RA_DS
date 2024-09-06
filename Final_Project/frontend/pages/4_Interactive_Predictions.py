@@ -1,3 +1,5 @@
+"""Page for predictions"""
+
 import streamlit as st
 from PIL import Image
 from streamlit_drawable_canvas import st_canvas
@@ -24,30 +26,30 @@ if table_option == "Titanic":
     pclass = st.selectbox("Passenger Class:", [1, 2, 3])
     sex = st.selectbox("Sex:", ["male", "female"])
     age = st.slider("Age:", 0, 100, 30)
-    Fare = st.slider("Fare:", 0, 512, 100)
+    fare = st.slider("Fare:", 0, 512, 100)
     sib = st.selectbox("Number of Siblings/Spouses:", ["0", "1", "2", "3"])
     par = st.selectbox("Number of Parents/Children:", ["0", "1", "2", "3"])
 
-    user_input = pd.DataFrame(
-        {
-            "Pclass": [pclass],
-            "Age": [age],
-            "SibSp": [sib],
-            "Parch": [par],
-            "Fare": [Fare],
-            "Sex_binary": sex_map[sex],
-        }
-    ).to_dict(orient="records")[0]
+    # user_input = pd.DataFrame(
+    #     {
+    #         "Pclass": [pclass],
+    #         "Age": [age],
+    #         "SibSp": [sib],
+    #         "Parch": [par],
+    #         "Fare": [Fare],
+    #         "Sex_binary": sex_map[sex],
+    #     }
+    # ).to_dict(orient="records")[0]
 
     # maybe
-    #     user_input = {
-    #     "Pclass": pclass,
-    #     "Age": age,
-    #     "SibSp": sib,
-    #     "Parch": par,
-    #     "Fare": fare,  # Use lowercase 'fare'
-    #     "Sex_binary": sex_map[sex],
-    # }
+    user_input = {
+        "Pclass": pclass,
+        "Age": age,
+        "SibSp": sib,
+        "Parch": par,
+        "Fare": fare,
+        "Sex_binary": sex_map[sex],
+    }
 
     if st.button("Predict"):
         response = requests.post(
@@ -95,19 +97,30 @@ elif table_option == "Housing":
         "Number of fireplaces:", min_value=0, max_value=5, value=2
     )
 
-    # columns = ['Gr Liv Area', 'Total Bsmt SF', 'Full Bath', 'TotRms AbvGrd', 'Fireplaces', 'Lot Area', 'Overall Qual', 'SalePrice']
+    # columns = ['Gr Liv Area', 'Total Bsmt SF', 'Full Bath',
+    # 'TotRms AbvGrd', 'Fireplaces', 'Lot Area', 'Overall Qual', 'SalePrice']
 
-    user_input = pd.DataFrame(
-        {
-            "Lot Area": [lot_area],
-            "Overall Qual": [overall_qual],
-            "Total Bsmt SF": [total_bsmt_sf],
-            "Gr Liv Area": [gr_liv_area],
-            "Full Bath": [full_bath],
-            "TotRms AbvGrd": [TotRms_AbvGrd],
-            "Fireplaces": [Fireplaces],
-        }
-    ).to_dict(orient="records")[0]
+    # user_input = pd.DataFrame(
+    #     {
+    #         "Lot Area": [lot_area],
+    #         "Overall Qual": [overall_qual],
+    #         "Total Bsmt SF": [total_bsmt_sf],
+    #         "Gr Liv Area": [gr_liv_area],
+    #         "Full Bath": [full_bath],
+    #         "TotRms AbvGrd": [TotRms_AbvGrd],
+    #         "Fireplaces": [Fireplaces],
+    #     }
+    # ).to_dict(orient="records")[0]
+
+    user_input = {
+        "Lot Area": [lot_area],
+        "Overall Qual": [overall_qual],
+        "Total Bsmt SF": [total_bsmt_sf],
+        "Gr Liv Area": [gr_liv_area],
+        "Full Bath": [full_bath],
+        "TotRms AbvGrd": [TotRms_AbvGrd],
+        "Fireplaces": [Fireplaces],
+    }
 
     if st.button("Predict"):
         response = requests.post(
@@ -121,12 +134,12 @@ elif table_option == "Housing":
         st.write(f"${prediction:,.2f}")
 
 elif table_option == "Movie":
-    query = "This is a good sentiment!"
-    query = st.text_area(label="Enter ONE sentence for sentiment testing:", value=query)
+    QUERY = "This is a good sentiment!"
+    QUERY = st.text_area(label="Enter ONE sentence for sentiment testing:", value=QUERY)
     if st.button("Predict"):
         response = requests.post(
             "http://flask_route:5000/predict_sentiment",
-            json={"text": query},
+            json={"text": QUERY},
             timeout=15,
         )
         result = response.json()
@@ -141,7 +154,7 @@ elif table_option == "MNIST":
     st.title("Handwritten Digit Recognition")
 
     # Create a canvas component
-    canvas_result = st_canvas(
+    CanvasResult = st_canvas(
         fill_color="rgba(0, 0, 0, 0.3)",  # Fixed fill color with some opacity
         stroke_width=3,
         stroke_color="#FFFFFF",
@@ -154,9 +167,9 @@ elif table_option == "MNIST":
     )
 
     if st.button("Predict"):
-        if canvas_result.image_data is not None:
+        if CanvasResult.image_data is not None:
             # Convert the image data to a PIL Image
-            input_numpy_array = np.array(canvas_result.image_data)
+            input_numpy_array = np.array(CanvasResult.image_data)
             input_image = Image.fromarray(input_numpy_array.astype("uint8"), "RGBA")
             input_image.save("user_drawing.png")
             # Convert to grayscale
