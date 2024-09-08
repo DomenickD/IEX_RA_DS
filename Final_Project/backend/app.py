@@ -28,8 +28,10 @@ with open("models/vectorizer.pkl", "rb") as vec_file:
 with open("models/NLP_model.pkl", "rb") as model_file:
     nlp_model = pickle.load(model_file)
 
-with open("models/mnist_model.keras", "rb") as f:
-    mnist_model = keras.models.load_model(f)
+FILENAME = "models/mnist_model.keras"
+with open(FILENAME, "rb") as f:
+    mnist_model = keras.models.load_model(FILENAME)
+
 with open("models/my_model.pkl", "rb") as f:
     titanic_model = pickle.load(f)
 

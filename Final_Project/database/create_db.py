@@ -5,10 +5,7 @@ import pandas as pd
 
 # 1. Load Data into DataFrame
 # titanic_df = pd.read_csv('data_files/titanic_data.csv')
-titanic_df = pd.read_csv(
-    r"C:/Users/Domenick Dobbs/Desktop/IEX/DataScience-IEX-USF/\
-    Final_Project/database/data_files/titanic_data.csv"
-)
+titanic_df = pd.read_csv(r"app/data_files/titanic_data.csv")
 
 
 columns = [
